@@ -79,6 +79,9 @@ $(function() {
 
     function save(event) {
         event.preventDefault();
+        let slot = parseInt($(this).closest(".time-block").attr("id"));
+        let data = $.trim($(this).parent().siblings("textarea").val());
+        SaveData[slot].theData = data;
         localStorage.setItem('SaveData', JSON.stringify(SaveData));
     }
 
@@ -88,8 +91,8 @@ $(function() {
     }
 
     function addColor(theTime) {
-        var rnow = moment(rn, 'hA');
-        var currentSlot = moment(theTime, 'hA');
+        let rnow = moment(rn, 'hA');
+        let currentSlot = moment(theTime, 'hA');
         if (rnow.isBefore(currentSlot) === true) {
             return "future";
         } else if (rnow.isAfter(currentSlot) === true) {
