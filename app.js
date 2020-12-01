@@ -49,17 +49,18 @@ $(function() {
 
     SaveData.forEach(function(SaveData, idx) {
         const theTime = SaveData.theTime;
-        const timedSlots = '<form>\
-        <div class="time-block" id="' + idx + '">\
+        const theData = addColor(theTime);
+        const timedSlots = `<form>\
+        <div class="time-block" id="${idx}">\
         <div class="row">\
-        <div class="col-sm-12 col-md-1 hour">' + theTime + '</div>\
-        <textarea class="col-sm-12 col-md-10 form-control">' + SaveData.theData + '</textarea>\
+        <div class="col-sm-12 col-md-1 hour">${theTime}</div>\
+        <textarea class="col-sm-12 col-md-10 form-control ${theData}">${SaveData.theData}</textarea>\
         <div class="col-sm-12 col-md-1">\
         <button class="saveBtn" type="submit"><i class="far fa-save fa-2x"></i></button>\
         </div>\
         </div>\
         </div>\
-        </form>';
+        </form>`;
 
         $(".container").append(timedSlots);
     });
@@ -84,6 +85,18 @@ $(function() {
     function LoadData() {
         let loadedData = JSON.parse(localStorage.getItem('SaveData'));
         if (loadedData) return SaveData = loadedData;
+    }
+
+    function addColor(theTime) {
+        var rnow = moment(rn, 'hA');
+        var currentSlot = moment(theTime, 'hA');
+        if (rnow.isBefore(currentSlot) === true) {
+            return "future";
+        } else if (rnow.isAfter(currentSlot) === true) {
+            return "past";
+        } else {
+            return "present";
+        }
     }
     
     function clear() {
